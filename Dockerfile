@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-alpine AS builder
+FROM eclipse-temurin:17-alpine AS builder
 
 ADD ./gradle gradle/
 ADD ./gradlew gradlew
@@ -10,10 +10,10 @@ RUN ./gradlew --version
 
 RUN ./gradlew build -x test --no-daemon
 
-FROM eclipse-temurin:21-alpine
+FROM eclipse-temurin:17-alpine
 WORKDIR /usr/src/app
-COPY --from=builder build/libs/b-account-ledger.jar /usr/src/app/b-account-ledger.jar
+COPY --from=builder build/libs/event-sourcing.jar /usr/src/app/event-sourcing.jar
 
 ENV JAVA_OPTS=""
 
-CMD java $JAVA_OPTS -jar b-account-ledger.jar
+CMD java $JAVA_OPTS -jar event-sourcing.jar
