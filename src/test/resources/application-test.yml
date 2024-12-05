@@ -1,0 +1,7 @@
+spring:
+  jpa:
+    database: postgresql
+  datasource:
+    username: ${embedded.postgresql.user}
+    password: ${embedded.postgresql.password}
+    url: jdbc:postgresql://${embedded.postgresql.host}:${embedded.postgresql.port}/${embedded.postgresql.database}

@@ -1,0 +1,43 @@
+name: Tests, Spotless on push
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Configure Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+      - name: Run Spotless Check
+        run: ./gradlew spotlessCheck
+      - name: Run tests
+        run: ./gradlew test
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v4
+        if: success() || failure()
+        with:
+          report_paths: '**/build/test-results/test/TEST-*.xml'
+  GeneratePlantUML:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - name: plantuml
+        id: plantuml
+        uses: grassedge/generate-plantuml-action@v1.5
+        with:
+          path: "."
+          message: "Render PlantUML files"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

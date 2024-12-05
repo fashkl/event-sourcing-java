@@ -7,6 +7,9 @@ plugins {
 
 group = "event.sourcing"
 val springdocOpenApiVersion = "2.6.0"
+val playtikaVersion = "3.1.9"
+val awaitilityVersion = "4.2.2"
+
 
 java {
     toolchain {
@@ -37,6 +40,8 @@ dependencies {
     testImplementation("org.mockito:mockito-junit-jupiter")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testCompileOnly("org.projectlombok:lombok")
+    testImplementation("com.playtika.testcontainers:embedded-postgresql:$playtikaVersion")
+    testImplementation("org.awaitility:awaitility:$awaitilityVersion")
 }
 
 tasks.withType<Test> {
