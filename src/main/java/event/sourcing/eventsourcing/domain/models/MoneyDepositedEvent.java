@@ -1,14 +1,14 @@
 package event.sourcing.eventsourcing.domain.models;
 
-public class MoneyDepositedEvent extends Event {
-    private double amount;
+import java.util.UUID;
+import lombok.Getter;
 
-    public MoneyDepositedEvent(String accountId, double amount) {
+@Getter
+public class MoneyDepositedEvent extends Event {
+    private final double amount;
+
+    public MoneyDepositedEvent(UUID accountId, double amount) {
         super(accountId);
         this.amount = amount;
-    }
-
-    public double getAmount() {
-        return amount;
     }
 }

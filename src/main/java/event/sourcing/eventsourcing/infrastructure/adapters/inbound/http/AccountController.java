@@ -1,6 +1,7 @@
 package event.sourcing.eventsourcing.infrastructure.adapters.inbound.http;
 
 import event.sourcing.eventsourcing.application.usecases.BankAccountUseCase;
+import java.util.UUID;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,22 +14,22 @@ public class AccountController {
     }
 
     @PostMapping("/create")
-    public String createAccount() {
+    public UUID createAccount() {
         return bankAccountUseCase.createAccount();
     }
 
     @PostMapping("/{accountId}/deposit")
-    public void deposit(@PathVariable String accountId, @RequestParam double amount) {
+    public void deposit(@PathVariable UUID accountId, @RequestParam double amount) {
         bankAccountUseCase.deposit(accountId, amount);
     }
 
     @PostMapping("/{accountId}/withdraw")
-    public void withdraw(@PathVariable String accountId, @RequestParam double amount) {
+    public void withdraw(@PathVariable UUID accountId, @RequestParam double amount) {
         bankAccountUseCase.withdraw(accountId, amount);
     }
 
     @GetMapping("/{accountId}/balance")
-    public double getBalance(@PathVariable String accountId) {
+    public double getBalance(@PathVariable UUID accountId) {
         return bankAccountUseCase.getBalance(accountId);
     }
 }

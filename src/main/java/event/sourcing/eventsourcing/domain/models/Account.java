@@ -1,9 +1,12 @@
 package event.sourcing.eventsourcing.domain.models;
 
 import java.util.List;
+import java.util.UUID;
+import lombok.Getter;
 
+@Getter
 public class Account {
-    private String accountId;
+    private UUID accountId;
     private double balance;
 
     public Account(List<Event> events) {
@@ -26,9 +29,5 @@ public class Account {
 
     public void withdraw(double amount) {
         balance -= amount;
-    }
-
-    public double getBalance() {
-        return balance;
     }
 }

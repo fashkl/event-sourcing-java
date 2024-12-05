@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 import event.sourcing.eventsourcing.domain.models.AccountCreatedEvent;
 import event.sourcing.eventsourcing.domain.models.MoneyDepositedEvent;
 import event.sourcing.eventsourcing.domain.ports.EventRepository;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
 class BankAccountUseCaseTest {
@@ -14,7 +15,7 @@ class BankAccountUseCaseTest {
         EventRepository mockRepository = mock(EventRepository.class);
         BankAccountUseCase useCase = new BankAccountUseCase(mockRepository);
 
-        String accountId = useCase.createAccount();
+        var accountId = useCase.createAccount();
 
         verify(mockRepository, times(1)).save(any(AccountCreatedEvent.class));
     }
@@ -24,7 +25,7 @@ class BankAccountUseCaseTest {
         EventRepository mockRepository = mock(EventRepository.class);
         BankAccountUseCase useCase = new BankAccountUseCase(mockRepository);
 
-        useCase.deposit("123", 100.0);
+        useCase.deposit(UUID.randomUUID(), 100.0);
 
         verify(mockRepository, times(1)).save(any(MoneyDepositedEvent.class));
     }

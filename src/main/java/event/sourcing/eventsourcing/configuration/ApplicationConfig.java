@@ -1,7 +1,9 @@
 package event.sourcing.eventsourcing.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import event.sourcing.eventsourcing.application.usecases.BankAccountUseCase;
 import event.sourcing.eventsourcing.domain.ports.EventRepository;
+import event.sourcing.eventsourcing.infrastructure.adapters.outbound.db.EventJpaRepository;
 import event.sourcing.eventsourcing.infrastructure.adapters.outbound.db.EventStoreRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +17,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public EventRepository eventRepository() {
-        return new EventStoreRepository();
+    public EventRepository eventRepository(EventJpaRepository eventJpaRepository, ObjectMapper objectMapper) {
+        return new EventStoreRepository(eventJpaRepository, objectMapper);
     }
 }

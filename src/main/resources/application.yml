@@ -1,6 +1,24 @@
 spring:
-  application:
-  name: event-sourcing
+  application.name: event-sourcing
+  datasource:
+    url: jdbc:postgresql://localhost:5432/event_sourcing
+    username: postgres
+    password: superpass
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      pool-name: HikariPool-1
+      max-lifetime: 2000000
+      connection-timeout: 30000
+  jpa:
+    hibernate:
+      ddl-auto: update # For development; change to 'validate' or 'none' in production
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 
 springdoc:
   swagger-ui:
@@ -9,3 +27,7 @@ springdoc:
     disable-swagger-default-url: true
   api-docs:
     path: /api-documentation-json
+
+logging:
+  level:
+    com.zaxxer.hikari: DEBUG
